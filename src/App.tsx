@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-import Post from './components/post';
-import { PostType } from './types/post';
-import { getTopStories } from './api/getTopStories';
+import Story from './components/story';
+import { StoryType } from './types/story';
+import { getRandomStories } from './api/getTopStories';
 
 import './App.scss';
 
 function App() {
 
-  const [posts, setPosts] = useState<PostType[] | undefined>([]);
+  const [stories, setStories] = useState<StoryType[] | undefined>([]);
 
   useEffect(() => {
     const getStories = async () => {
-      const topStories = await getTopStories();
-      setPosts(topStories)
+      const topStories = await getRandomStories();
+      setStories(topStories)
     }
     getStories()
     
@@ -23,8 +23,8 @@ function App() {
     <div className="container">
       <div className="row">
           {
-              posts?.map((post: PostType) => {
-                return <Post key={post.id} post={post} />
+              stories?.map((story: StoryType) => {
+                return <Story key={story.id} story={story} />
               })   
             }
       </div>

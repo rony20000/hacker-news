@@ -1,4 +1,4 @@
-export interface PostType {
+export interface StoryType {
     by: string;
     descendants: number;
     id: number;
@@ -8,4 +8,9 @@ export interface PostType {
     title: string;
     type: string;
     url: string;
+}
+
+export interface AuthorType {
+    karma: number;
+    id: string;
 }

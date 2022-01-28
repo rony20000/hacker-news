@@ -1,7 +1,8 @@
 import { endpoints } from '../endpoints';
-import { PostType } from '../types/post';
+import { StoryType } from '../types/story';
+import { randomize } from '../utils/randomize';
 
-export const getTopStories = async () => {
+export const getRandomStories = async () => {
 
     try {
 
@@ -10,11 +11,11 @@ export const getTopStories = async () => {
         throw new Error("Response Error:" + response.text);
          // I would create some pop uo to show to the user
       }
+      const jsonStories = await response.json();
+
+      const randomStories = randomize(jsonStories, 10)
       
-      const json = await response.json();
-      
-      const promises = json
-        .slice(0, 10)
+      const randomStoriesPromises = randomStories
         .map((id: number) =>
           fetch(endpoints.storyPoints(id))
           .then(
@@ -22,7 +23,7 @@ export const getTopStories = async () => {
           )
         )
         
-      const result: PostType[] | undefined = await Promise.all(promises);
+      const result: StoryType[] | undefined = await Promise.all(randomStoriesPromises);
 
       result.sort((a, b) => {
         const keyA = a.score

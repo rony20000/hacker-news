@@ -1,13 +1,13 @@
 import { endpoints } from '../endpoints';
-import { PostType } from '../types/post';
+import { StoryType, AuthorType } from '../types/story';
 
-export const getAuthorKarma = async (post: PostType) => {
+export const getAuthorKarma = async (story: StoryType) => {
     try {
-        const response = await fetch(endpoints.user(post.by));
+        const response = await fetch(endpoints.user(story.by));
         if (response.ok === false) {
             throw new Error("Response Error:" + response.text);
         }
-        const { karma, id } = await response.json();
+        const { karma, id }: AuthorType = await response.json();
         return {karma, id}
     } catch (err) {
         console.error(err);
